@@ -1,0 +1,1 @@
+Include a more abstract way of storing token values. Consider using class definition from classtest.py

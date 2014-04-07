@@ -26,8 +26,6 @@ class variable_token:
 		
 		return variable_token.var_map[variable_token.current]
 
-
-
 class operator_add_token:
 	lbp = 10
 	def nud(self):
@@ -60,7 +58,6 @@ class operator_pow_token:
 
 class end_token:
 	lbp = 0
-	
 
 def tokenize_python(program):
 	import tokenize
@@ -106,6 +103,7 @@ def tokenize(program):
 			raise SyntaxError("unknown operator: %r" % value)
 	yield end_token()
 
+
 def expression(rbp=0):
 	global token
 	t = token
@@ -121,17 +119,17 @@ def parse(program):
 	global token, next
 	next = tokenize(program).next
 	token = next()
-	#print program, "->", expression()
 	val = expression()
 	return val
 
+def getList(expression, iteration):
+	group = []
+	for x in range(0, iteration):
+		group.append(parse(expression))
+	return group
 
-
-group = []
-for x in range(0,10):
-	group.append(parse("2*x+3*y"))
-print group
-'''
+print getList("3*x+4**y", 5)
+'''token
 parse("+1")
 parse("-1")
 parse("10")
