@@ -2,6 +2,7 @@
 
 import sys
 import re
+from methodsclassestobeincluded import *
 
 class literal_token:
 	def __init__(self, value):
@@ -12,8 +13,7 @@ class literal_token:
 class variable_token:
 	var_map = {"(empty)": 0}
 	current = "(empty)"
-	def __init__(self):
-		print variable_token.var_map[variable_token.current], " ", variable_token.current
+
 	@staticmethod
 	def include(value):
 		try:
@@ -128,18 +128,12 @@ def getList(expression, iteration):
 		group.append(parse(expression))
 	return group
 
-print getList("3*x+4**y", 5)
-'''token
-parse("+1")
-parse("-1")
-parse("10")
-parse("1**2**3")
-parse("1+2")
-parse("1+2+3")
-parse("1+2*3")
-parse("1*2+3")
-parse("1*2/3")
-parse("test*2+3")
-parse("test*2+3")
-#parse("*1") # invalid syntax
-'''
+if 1:
+	myBKey = Key('B', Key.MajorKey)
+	li = getList("3*x+4**y-1", 12)
+	sto = generateModValuePair(li)
+	li2 = [int(i[0]) for i in sto]
+	li2 = createNoteList(li2, myBKey)
+	print li2
+	
+

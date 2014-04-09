@@ -1,21 +1,22 @@
 #!/usr/local/bin/python2.7
-    
-print "Hello World!\n";
-
-t = [0,10,22,48]
-# A, A#, B, C, C#, D, D#, E, F, F#, G, G#
-
-majorKey = [0,2,4,5,7,9,11]
-
 class Key:
   #KeyMajor = [0,2,4,5,7,9,11]
   NoteList = []
+  MajorKey = [0,2,4,5,7,9,11]
+  NatMinor = [0,2,3,5,7,8,10]
+  HarmMinor = [0,2,3,5,7,8,11]
   
-  def __init__(self, baseNote, keylist):
+  def __init__(self, baseNote, key=MajorKey):
     if len(Key.NoteList) == 0:
       Key.createNoteList()
-    self.key = keylist
+    self.key = key
     self.base = baseNote
+
+  def getScale(self):
+    retL = []
+    for i in range(0, len(self.key)):
+      retL.append(self.getNoteFromKey(i))
+    return retL
   
   @staticmethod
   def createNoteList():
@@ -34,20 +35,36 @@ class Key:
     
   def getNoteFromKey(self, index):
     i = Key.NoteList.index(self.base)
-    num = (i + self.key[index])%11
+    num = (i + self.key[index])%12
     return Key.NoteList[num]
-  
 
-majorC = Key('C', [0,2,4,5,7,9,11])
-print majorC.getNoteFromKey(2)
+  def sigFromAccidentals(count, scale="major"):
+    signatureList = ['Gb', 'Db', 'Ab', 'Eb', 'Bb', 'F', 'C', 'F#',
+         'B', 'E', 'A', 'D', 'G']
+    
+  def matchingScale(self):
+    pass #solve eventually
   
-def generateValuePair(mylist):
+'''
+majorC = Key('B')
+print Key.NoteList
+print majorC.getNoteFromKey(2)
+print majorC.getScale()
+  '''
+def generateModValuePair(mylist):
   retList = []
   for val in mylist:
-    m = val % 8
-    n = val / 8
-    tup = (m,n)
-    retList.append(tup)
+    m = val % 7
+    n = val / 7
+    retList.append((m,n))
   return retList
-  
-print generateValuePair(t)
+
+def createNoteList(mylist, key):
+  retList = []
+  for val in mylist:
+    retList.append(key.getNoteFromKey(val))
+  return retList
+  '''
+sto = generateValuePair(t)
+print sto[0][0]
+'''
