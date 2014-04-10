@@ -1,4 +1,6 @@
 #!/usr/local/bin/python2.7
+from collections import deque
+
 class Key:
   #KeyMajor = [0,2,4,5,7,9,11]
   NoteList = []
@@ -44,13 +46,41 @@ class Key:
     
   def matchingScale(self):
     pass #solve eventually
+
+#1,2,3,4,6,8 (eigth note increments)
+#mod6 decides duration,
+def matchToSum(mylist, mCount):
+  initDeq = deque(mylist)
+  finalDeq = deque()
+  sum1 = 0
+  print initDeq
+  while len(initDeq) > 0:
+    temp = sum1+initDeq[0]
+    if(temp > mCount):
+      if((mCount-sum1) < (temp)):
+        t = finalDeq.pop()
+        t += mCount-sum1
+        finalDeq.append(t)
+        sum1 = 0
+      else:
+        t = initDeq.popleft()
+        t -= temp-mCount
+        finalDeq.append(t)
+        sum1 = 0
+    else:
+      t = initDeq.popleft()
+      sum1 += t
+      finalDeq.append(t)
+  return finalDeq
   
-'''
-majorC = Key('B')
-print Key.NoteList
-print majorC.getNoteFromKey(2)
-print majorC.getScale()
-  '''
+def listToNoteDuration(mylist):
+  #diction = {0:.125,1:.25,2:.325,3:.5,4:.75,5:1}
+  diction = {0:1,1:2,2:3,3:4,4:6,5:8}
+  decList = []
+  for val in mylist:
+    decList.append(diction[(val*7)%6])
+  return matchToSum(decList, 8)
+  
 def generateModValuePair(mylist):
   retList = []
   for val in mylist:
@@ -64,7 +94,3 @@ def createNoteList(mylist, key):
   for val in mylist:
     retList.append(key.getNoteFromKey(val))
   return retList
-  '''
-sto = generateValuePair(t)
-print sto[0][0]
-'''

@@ -1,1 +1,5 @@
-Include a more abstract way of storing token values. Consider using class definition from classtest.py
+-Include a more abstract way of storing token values. Consider using class definition from classtest.py
+
+-Bring in paranthesis
+
+-Rename and clean methodsclassestobeincluded

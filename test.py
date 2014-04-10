@@ -130,10 +130,14 @@ def getList(expression, iteration):
 
 if 1:
 	myBKey = Key('B', Key.MajorKey)
-	li = getList("3*x+4**y-1", 12)
+	myCKey = Key('C', Key.MajorKey)
+	print myCKey.getScale()
+	li = getList("5*x", 12)
 	sto = generateModValuePair(li)
 	li2 = [int(i[0]) for i in sto]
+	print [int(i[1]) for i in sto]
+	li3 = listToNoteDuration([int(i[1]) for i in sto])
 	li2 = createNoteList(li2, myBKey)
-	print li2
+	print li2, "\n", li3
 	
 
