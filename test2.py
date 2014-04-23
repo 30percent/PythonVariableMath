@@ -3,6 +3,7 @@
 import sys
 import re
 from methodsclassestobeincluded import *
+import inspect
 
 class literal_token:
         def __init__(self, value):
@@ -22,8 +23,8 @@ class variable_token:
                 except KeyError:
                         variable_token.var_map[value] = 0
                         variable_token.current = value
-        @staticmethod
         def nud(self):
+                
                 return variable_token.var_map[variable_token.current]
 
 class operator_add_token:
@@ -55,25 +56,28 @@ class operator_pow_token:
         lbp = 30
         def led(self, left):
                 return left ** expression(30-1)
-'''
-class left_paren_token:
-        global token
-        lbp=150
-        def nud(self):
-                
-                if token.id != ")":
-                        while 1:
-                                if token.id == ")":
-                                        break
-                                print "This is exp: ", expression()
-                advance(")")
-                return 0
-'''
-                
+
+class operator_rparen_token:
+        lbp = 0
 
 class end_token:
         lbp = 0
 
+class operator_lparen_token:
+        lbp = 150
+
+        def nud(self):
+                expr = expression()
+                advance()
+                return expr
+
+def advance():
+        global token
+        if isinstance(token, operator_rparen_token):
+                token = next()
+        else:
+                raise SyntaxError("Syntax Error. Open Parens without close.")
+        
 def tokenize_python(program):
         import tokenize
         from cStringIO import StringIO
@@ -111,7 +115,13 @@ def tokenize(program):
                         elif value == "/":
                                 yield operator_div_token()
                         elif value == "**":
-                                yield operator_pow_token()                      
+                                yield operator_pow_token()
+                        elif value == "(":
+                                yield operator_lparen_token()
+                        elif value == ")":
+                                yield operator_rparen_token()
+                        else:
+                                raise SyntaxError("Unknown operator: %r" % value)
                 elif ident == "(end)":
                         yield end_token()
                 else:
@@ -145,17 +155,17 @@ def getList(expression, iteration):
 
 if 1:
         
-        #myBKey = Key('B', Key.MajorKey)
-        #myCKey = Key('C', Key.MajorKey)
-        #print myCKey.getScale()
-        li = getList("5*x", 12)
+        myBKey = Key('B', Key.MajorKey)
+        myCKey = Key('C', Key.MajorKey)
+        print myCKey.getScale()
+        
+        li = getList("((1+5)*x) + 1", 12)
         print li
-        '''
         sto = generateModValuePair(li)
+        print sto
         li2 = [int(i[0]) for i in sto]
-        print [int(i[1]) for i in sto]
+        #print [int(i[1]) for i in sto]
         li3 = listToNoteDuration([int(i[1]) for i in sto])
         li2 = createNoteList(li2, myBKey)
         print li2, "\n", li3
-        '''
         

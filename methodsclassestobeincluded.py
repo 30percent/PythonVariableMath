@@ -53,7 +53,6 @@ def matchToSum(mylist, mCount):
   initDeq = deque(mylist)
   finalDeq = deque()
   sum1 = 0
-  print initDeq
   while len(initDeq) > 0:
     temp = sum1+initDeq[0]
     if(temp > mCount):
@@ -74,8 +73,8 @@ def matchToSum(mylist, mCount):
   return finalDeq
   
 def listToNoteDuration(mylist):
-  #diction = {0:.125,1:.25,2:.325,3:.5,4:.75,5:1}
-  diction = {0:1,1:2,2:3,3:4,4:6,5:8}
+  diction = {0:.125,1:.25,2:.325,3:.5,4:.75,5:1}
+  #diction = {0:1,1:2,2:3,3:4,4:6,5:8}
   decList = []
   for val in mylist:
     decList.append(diction[(val*7)%6])
