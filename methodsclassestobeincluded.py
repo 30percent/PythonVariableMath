@@ -3,7 +3,7 @@ from collections import deque
 
 class Key:
   #KeyMajor = [0,2,4,5,7,9,11]
-  NoteList = []
+  NoteList = createNoteList()
   MajorKey = [0,2,4,5,7,9,11]
   NatMinor = [0,2,3,5,7,8,10]
   HarmMinor = [0,2,3,5,7,8,11]
@@ -14,27 +14,37 @@ class Key:
     self.key = key
     self.base = baseNote
 
+  '''
+    @return: list of "Notes" in order that fall within instance key
+  '''
   def getScale(self):
     retL = []
     for i in range(0, len(self.key)):
       retL.append(self.getNoteFromKey(i))
     return retL
   
+  '''
+    @return: list of ordered "Notes" that correspond to western structure
+  '''
   @staticmethod
   def createNoteList():
-    retList = Key.NoteList
+    retList = []
     val = 0
     it = 0
     while(val < 12):
-      key = chr(ord('A') + ((it+2)%7))
+      note = chr(ord('A') + ((it+2)%7))
       it += 1
-      retList.append(key)
+      retList.append(note)
       val += 1
-      if(key != 'E' and key != 'B'):
-        retList.append(key+'#')
+      if(note != 'E' and note != 'B'):
+        retList.append(note+'#')
         val += 1
     return retList
-    
+  
+  '''
+    @param: "index" - index of desired note within instance key list
+    @return: (String) "Note" based on key and base note
+  '''
   def getNoteFromKey(self, index):
     i = Key.NoteList.index(self.base)
     num = (i + self.key[index])%12
